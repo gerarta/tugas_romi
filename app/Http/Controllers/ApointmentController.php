@@ -13,7 +13,13 @@ class ApointmentController extends Controller
     }
 
     public function store(Request $request){
-        Mail::to($request->email)->send(new ApointmentMail());
+        $pasien = [ 
+            'name' => $request->name,
+            'date' => $request->date,
+            'department' => $request->department
+        ];
+        
+        Mail::to($request->email)->send(new ApointmentMail($pasien));
         return redirect()->back();
     }
 }

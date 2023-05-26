@@ -16,9 +16,18 @@ class ApointmentMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($pasien)
     {
-        //
+        $this->pasien = $pasien;
+    }
+
+    public function build(){
+        return $this->markdown('emails.apointments_mails')
+            ->with([
+                'name' => $this->pasien['name'],
+                'date' => $this->pasien['date'],
+                'department' => $this->pasien['department']
+            ]);
     }
 
     /**
@@ -37,7 +46,7 @@ class ApointmentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.apointment_mail',
+            markdown: 'emails.apointment_mails',
         );
     }
 
